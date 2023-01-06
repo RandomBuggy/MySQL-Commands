@@ -1,0 +1,6 @@
+#sqlite3 create/use a database
+sqlite3 example.db (do normal CRUD operation interactively in the sqlite3 shell)
+
+OR,
+
+sqlite3 example.db "CRUD query" (do CRUD operation in the command line ono-interactively, most useful for shell-script)

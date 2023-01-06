@@ -1,0 +1,268 @@
+first refer to the termux wiki for Mariadb (MySQL) installation 
+
+must run all the commands in the MySQL shell (for beginners --> with root user)
+
+1. to show databases/schemas/tables
+ show databases;
+ show schemas;
+ show tables;
+
+2. to use a databases/schemas/tables
+use database_name;
+use schema_name;
+use table_name;
+
+3. to create a table
+
+CREATE TABLE table_name (
+column_name datatype,
+column_name datatype,
+column_name datatype,
+column_name datatype,
+column_name datatype,
+column_name datatype,
+        );
+
+
+4. to insert data into a table
+
+INSERT INTO table_name (
+    column_name,
+    column_name,
+    column_name,
+    column_name,
+    column_name,
+)
+VALUES (
+    values_across_datatypes
+    values_across_datatypes
+    values_across_datatypes
+    values_across_datatypes
+    values_across_datatypes
+    );
+Note:- column name are optional, if nedded use rather not
+
+5. to read data from a table
+
+SELECT column_name AS "alias_name", column_name AS "alias_name", column_name AS "alias_name" FROM table_name;
+
+Note:- to select all column use * instead of column_name
+
+
+with WHERE phrase:-
+
+SELECT column_name AS "alias_name", column_name AS "alias_name" FROM table_name WHERE condition;
+
+conditional operator's:-
+ basic : = != > < >= <!-- <=
+
+6. to delete a table
+
+DROP TABLE table_name;
+
+7. to attach checkpoint to a table
+constraints (checkpoints) are concatenate with column's datatype .there are mostly 6 constraints.they are:- NOT NULL, UNIQUE, DEFAULT, CHECK, FOREIGN KEY, PRIMARY KEY. constraints are DB side protection to prevent misbehaviour of SQL query. if any constraints condition does not match in the SQL insert query, the query failed and DB get safe from wrong and malicious data input.
+
+CREATE TABLE table_name (
+    column_name,
+    column_name,
+    column_name
+        )
+    VALUES (
+    values_across_datatypes constraints,
+    values_across_datatypes constraints,
+    values_across_datatypes constraints,
+    values_across_datatypes constraints
+           );
+
+8. AND, OR, NOT operator
+
+AND, OR or NOT operator works on boolean algebra. generally used with SELECT query's where phase.
+
+SELECT * FROM table_name WHERE condition AND condition AND condition AND condition OR condition OR NOT condition AND NOT condition AND so on;
+
+
+9. IN operator
+
+IN operator is the short hand of OR operator (as such a replacement). IN operator allows multiple values against a column inside WHERE clause and fetch record if any of the value match.
+
+SELECT * FROM table_name WHERE age IN (value, value, value);
+
+
+10. LIKE operator
+
+LIKE operator is used for searching among records with WHERE clause and two wildcard %, _ is used for pattern matching.
+% -> --> ensures zero, one or multiple characters
+_ -> ensures one or multiple characters
+
+SELECT * FROM table_name WHERE name LIKE "%a";
+SELECT * FROM table_name WHERE name LIKE "a%";
+
+
+11. BETWEEN and NOT BETWEEN operator
+
+BETWEEN / NOT BETWEEN operator are used to search data in a range or not in a range (but works only on integer column's record)
+
+SELECT * FROM table_name WHERE age BETWEEN 34 AND 50;
+SELECT * FROM table_name WHERE age NOT BETWEEN 34 AND 50;
+
+12. ORDER BY and DISTINCT operator
+
+ORDER BY clause is used with SELECT query to sort record in ascending or descending order. ASC for ascending and DESC for descending order.
+
+SELECT * FROM table_name ORDER BY column_name ASC;
+SELECT * FROM table_name ORDER BY column_name DESC;
+
+DISTINCT clause is used just after SELECT keyword to fetch unique entry of record based on a column.
+
+SELECT DISTINCT column_name FROM table_name;
+SELECT DISTINCT column_name FROM table_name ORDER BY column_name DESC;
+
+13. IS NULL and IS NOT NULL operator
+
+IS NULL / IS NOT NULL operator fetch record if any field is NULl or not and use with where clause.
+
+SELECT * FROM table_name WHERE column_name IS NULL;
+SELECT * FROM table_name WHERE column_name IS NOT NULL;
+
+14. LIMIT and OFFSET operator
+
+LIMIT operator is used with select query and fetch from index-0  record to index-n record by default.
+OFFSET operator is used with LIMIT and it sets index-0'th element/record mapped with index-x'th element/record as 0 no index then the LIMIT operator counts from index 0 to n. so, basically OFFSET operator remap 0-index pointer to n-index pointer. but OFFSET operator is optional as needed.
+if n_number record not found then show lesser records.
+
+LIMIT operator can be also used with other select query operator
+
+SELECT * FROM table_name WHERE column_name LIMIT n_number OFFSET index_number;
+SELECT * FROM table_name ORDER BY column_name DESC LIMIT n_number OFFSET index_number;
+
+
+15.aggregate functions
+
+aggregate functions are used to manipulate data after fetching data from table/schemas with select query and these function are used instead of the * wildcard and return some value.
+
+aggregate function:- some of them are count(column_name), sum(column_name), avg(column_name), min(column_name), max(column_name)
+
+SELECT avg(fees) AS "alias_name" FROM table_name WHERE id > 500;
+SELECT min(age) AS "alias_name" FROM table_name ORDER BY DESC;
+
+16.update query
+
+WHERE clause is compulsory in this query, if you don't use where clause then all match value will get replaced. update query is used to re-entry a value inside a record's field(column) and PK(Primary Key) is needed if in safe Update mode.
+
+UPDATE table_name SET field_name(column_name) = new_value, field_name(column_name) = new_value WHERE condition;
+
+17.delete query
+
+again here where clause also needed because of being deleted all records from a table. PK can't not be re-assigned if any record deleted
+
+DELETE FROM table_name WHERE unique_condition;
+
+18. data transaction (COMMIT & ROLLBACK)
+
+transaction in database means from CRUD operation CUD operation. if the the operation you can COMMIT your db as git otherwise if you are not satisfied with your operation you can ROLLBACK your database.
+
+commit query:
+COMMIT;
+
+rollback query:
+ROLLBACK;
+
+
+19. PK and FK constraints
+
+PK and FK these two constraints are used in RDBMS.
+
+PK:- Primary Key constraints always contains unique data, can not be null and only and only can be one PK in a table
+
+FK:- Foreign Key constraints is used to link two table. the FK in a child table refer to a PK of its parent table. so, FK is the reference (a pointer like c language) to a PK. so, FK constraints condition are same. but FK can be multiple referencing to the same parent table PK.
+
+to declare a PK, these condition like unique, not null related to a field must be used in a create query. syntax below:-
+
+CREATE TABLE table_name (
+column_name datatype NOT NULL AUTO_INCREMENT,
+column_name datatype constraints,
+column_name datatype constraints,
+PRIMARY KEY(column_name));
+
+to declare a FK:-
+
+CREATE TABLE table_name (
+column_name datatype constraints,
+column_name datatype constraints,
+column_name datatype constraints,
+PRIMARY KEY(column_name),
+FOREIGN KEY(child table's[[current creating table's]] column_name) REFERENCES parent table_name(column_name[[PK name]])
+);
+
+20. INNER JOIN command
+
+join command only works with RDBMS not non-RDBMS. join is like a intersection operation between two sets (tables) mostly known as inner join. inner join is used with select query.
+
+SELECT column_name FROM parent table_name(which holds PK) INNER JOIN child table_name(which holds FK) ON condition;
+
+example:-
+SELECT * FROM students INNER JOIN cities ON students.city = cities.cid;
+
+21. LEFT JOIN and RIGHT JOIN command
+
+LEFT JOIN command returns all the records from left (first table) and only match records from right (second table) table.
+
+SELECT column_name FROM parent table_name LEFT JOIN child table_name ON condition;
+
+example:-
+SELECT * FROM students LEFT JOIN teachers ON students.t_id = teachers.id;
+
+RICHT JOIN command returns all the records from the right table and only match records from the left table.
+
+SELECT column_name FROM parent table_name RIGHT JOIN child table_name ON condition;
+
+example:-
+SELECT * FROM students RIGHT JOIN teachers ON students.t_id = teachers.id;
+
+22. CROSS JOIN command
+
+CROSS JOIN command produces a multiplication result of two tables if no WHERE clause is specified. the result is known as 'Cartesian Product'. total is (number of rows in first table * number of rows in second table)
+
+SELECT column_name FROM parent table_name CROSS JOIN child table_name ON condition;
+
+example:-
+SELECT * FROM students CROSS JOIN teachers;
+
+23. JOIN multiple table
+
+we can JOIN multiple(in this case, table is 3) table using INNER JOIN command and pull out a set of multiple intersection operation on every table.
+
+SELECT column_name FROM parent table_name INNER JOIN child table_name ON condition INNER JOIN child table_name ON condition;
+
+example:-
+
+SELECT * FROM students INNER JOIN cities ON students.cid = cities.id INNER JOIN courses ON students.courseid = courses.id;
+
+24. GROUP BY and HAVING clause
+
+GROUP BY command is used to group many records in RDBMS which has common link from parent table's record entry to one of the child tables's record entry from multiple tables with JOIN command or without JOIN command and GROUP BY clause can also be used with HAVING clause as condition on GROUP BY input 
+
+SELECT column_name FROM table_name WHERE condition GROUP BY column_name;
+
+
+SELECT column_name FROM table_name WHERE condition GROUP BY column_name HAVING condition;
+
+example:-
+
+SELECT cid, cities.name, COUNT(cid) AS total from students INNER JOIN ON students.cid = cities.cid GROUP BY (cid);
+
+
+SELECT cid, cities.name, COUNT(cid) AS total from students INNER JOIN ON students.cid = cities.cid GROUP BY (cid) HAVING COUNT(cid) >= 2;
+
+25. SubQuery and EXISTS / NOT EXISTS
+
+write a SQL query and after WHERE clause with parenthesis write  another SQL query any of the CRUD operation. inside brace query is called a SubQuery and JOIN command also be used with SubQuery.
+EXISTS or NOT EXISTS id used with WHERE clause as if the SubQuery returns something only and only then execute the Parent SQL query otherwise not. and can be used both keywords vice versa. it is used to prevent SQL injection on WHERE clause
+
+SELECT column_name FROM table_name WHERE column {{relational operator}} (another query);
+
+example:-
+SELECT name FROM students WHERE cid = (SELECT id FROM cities WHERE name = "jodhpor");
+
+SELECT name FROM students WHERE EXISTS (SELECT id FROM cities WHERE name = "jodhpor");
